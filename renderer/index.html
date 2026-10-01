@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI Video Editor</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #e5e7eb;
+        padding: 24px;
+      }
+      .panel {
+        width: 420px;
+      }
+      input, select, button {
+        display: block;
+        width: 100%;
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #374151;
+        font-size: 14px;
+      }
+      button {
+        background: #2563eb;
+        color: white;
+        cursor: pointer;
+        border: none;
+      }
+      pre {
+        background: #111827;
+        color: #d1d5db;
+        padding: 16px;
+        border-radius: 10px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>AI Video Editor</h1>
+
+    <div class="panel">
+      <input type="file" id="videoFile" accept="video/*" />
+      <select id="length">
+        <option value="15">15 sekund</option>
+        <option value="30" selected>30 sekund</option>
+        <option value="60">60 sekund</option>
+      </select>
+      <select id="platform">
+        <option value="TikTok">TikTok</option>
+        <option value="Reels">Instagram Reels</option>
+        <option value="Shorts">YouTube Shorts</option>
+      </select>
+
+      <button id="generateBtn">Generate Video</button>
+      <pre id="status">Oczekiwanie...</pre>
+    </div>
+
+    <script>
+      document.getElementById('generateBtn').addEventListener('click', async () => {
+        const file = document.getElementById('videoFile').files[0];
+        if (!file) {
+          alert('Najpierw wybierz plik wideo');
+          return;
+        }
+
+        const payload = {
+          filePath: file.path,
+          length: Number(document.getElementById('length').value),
+          platform: document.getElementById('platform').value,
+        };
+
+        document.getElementById('status').textContent = 'Przetwarzanie...';
+
+        try {
+          const result = await window.api.generateVideo(payload);
+          document.getElementById('status').textContent = JSON.stringify(result, null, 2);
+        } catch (err) {
+          document.getElementById('status').textContent = err.message;
+        }
+      });
+    </script>
+  </body>
+</html>

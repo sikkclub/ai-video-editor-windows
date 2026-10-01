@@ -1,0 +1,12 @@
+{
+  "name": "ai-video-editor-windows",
+  "version": "1.0.0",
+  "description": "AI Video Editor desktop starter for Windows using Electron + Python + Whisper + Qwen + FFmpeg",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^30.0.0"
+  }
+}

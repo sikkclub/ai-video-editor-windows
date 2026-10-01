@@ -1,0 +1,5 @@
+whisper
+moviepy
+opencv-python
+pydub
+requests
